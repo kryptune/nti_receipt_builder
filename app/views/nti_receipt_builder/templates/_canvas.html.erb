@@ -27,8 +27,11 @@
     </div>
   </div>
 
-  <div class="nrb-receipt-viewport" data-nrb-canvas-target="viewport"
-      data-action="pointerdown->nrb-canvas#paperClicked">
+  <div class="nrb-receipt-viewport" data-nrb-canvas-target="viewport">
+      <!-- Overlay panels rendered inside the canvas so they sit above the paper area. -->
+    <%= render 'nti_receipt_builder/templates/elements_panel' %>
+    <%= render 'nti_receipt_builder/templates/settings_panel', f: local_assigns[:f] %>
+    <%= render 'nti_receipt_builder/templates/properties_panel' %>
     <div class="nrb-receipt-paper" data-nrb-canvas-target="paper">
       <div class="nrb-receipt-paper-margins" data-nrb-canvas-target="marginGuides"></div>
       <div class="nrb-receipt-paper-elements" data-nrb-canvas-target="elementsLayer"></div>

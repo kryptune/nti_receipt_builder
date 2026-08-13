@@ -309,4 +309,26 @@ export default class extends Controller {
 
     event.formData.set(this.layoutFieldTarget.name, JSON.stringify(this.layoutValue))
   }
+
+  // Panel toggles: show/hide overlay panels above the canvas. Panels have ids so
+  // the topbar buttons can toggle them without restructuring the DOM.
+  togglePanelById(id) {
+    const el = document.getElementById(id)
+    if (!el) return
+    el.classList.toggle('open')
+  }
+
+  toggleElements() {
+    this.togglePanelById('receipt-elements-panel')
+    document.getElementById('receipt-settings-panel')?.classList.remove('open')
+  }
+
+  toggleSettings() {
+    this.togglePanelById('receipt-settings-panel')
+    document.getElementById('receipt-elements-panel')?.classList.remove('open')
+  }
+
+  toggleProperties() {
+    this.togglePanelById('receipt-properties-panel')
+  }
 }

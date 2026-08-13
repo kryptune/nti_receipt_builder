@@ -28,16 +28,47 @@
 /* ---- 3-column editor layout: settings+elements / canvas / properties ---- */
 .nrb-receipt-builder {
   display: grid;
-  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr) minmax(0, 19rem);
+  grid-template-columns: 1fr;
   gap: 1.25rem;
   align-items: start;
+  position: relative;
 }
-.nrb-receipt-builder-side { display: flex; flex-direction: column; gap: 1.25rem; }
+.nrb-receipt-builder-side { display: none; }
 @media (max-width: 1200px) {
   .nrb-receipt-builder { grid-template-columns: 1fr; }
-  .nrb-receipt-builder-side { flex-direction: row; flex-wrap: wrap; }
-  .nrb-receipt-builder-side > .nrb-receipt-panel { flex: 1 1 16rem; }
+  .nrb-receipt-builder-side { display: none; }
 }
+
+/* Overlay panels: hidden by default, shown as absolute overlays when the `.open` class
+   is added (toggled by the builder controller). These sit above the canvas, like Figma's
+   side panels, and do not affect canvas width while hidden. */
+.nrb-receipt-panel.overlay {
+  position: absolute;
+  top: 3.5rem;
+  bottom: 2rem;
+  width: 20rem;
+  max-width: 90%;
+  z-index: 60;
+  display: none;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.nrb-receipt-panel.overlay.open { display: block; opacity: 1; transform: none; margin: 0.5rem; }
+
+/* Left-side overlays (elements & settings) */
+#receipt-elements-panel.nrb-receipt-panel.overlay,
+#receipt-settings-panel.nrb-receipt-panel.overlay {
+  left: 1rem;
+  transform: translate(20px, 20px);
+}
+
+/* Right-side overlay (properties) */
+#receipt-properties-panel.nrb-receipt-panel.overlay {
+  right: 1rem;
+  transform: translate(-20px, 20px);
+}
+
+/* Slightly narrower canvas padding when overlays are in use (visual tweak). */
+.nrb-receipt-viewport { padding: 2rem; }
 
 /* ---- Shared glass-panel chrome for the editor's 4 panels ---- */
 .nrb-receipt-panel {
@@ -49,6 +80,9 @@
   box-shadow: 0 1.25rem 2.5rem -1.5rem rgba(31, 41, 55, 0.25);
   height: auto;
 }
+.nrb-receipt-panel--elements {height: fit-content; max-height: 90vh; overflow-y: auto;}
+.nrb-receipt-panel--properties {height: fit-content; max-height: 90vh; overflow-y: auto;}
+.nrb-receipt-panel--settings {height: fit-content; max-height: 90vh; overflow-y: auto;}
 .nrb-receipt-panel .card-title { margin-bottom: 0.85rem; }
 .nrb-receipt-panel--canvas { display: flex; flex-direction: column; gap: 1rem; height: auto; }
 .nrb-receipt-hint { font-size: 0.82rem; margin: 0.5rem 0 0; }
@@ -75,7 +109,7 @@
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .nrb-receipt-palette-btn .material-symbols-outlined {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--nrb-accent, var(--tblr-primary));
 }
 .nrb-receipt-palette-btn:hover {

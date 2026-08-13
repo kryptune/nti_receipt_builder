@@ -97,9 +97,15 @@ export default class extends Controller {
     }
   }
 
-  paperClicked() {
-    this.dispatch("deselect", { prefix: "receipt-canvas", bubbles: true })
-  }
+  // paperClicked() {
+  //   this.dispatch("deselect", { prefix: "receipt-canvas", bubbles: true })
+  //   // Close any open overlay panels when clicking on the paper, like dismissing
+  //   // a modal or side panels in design tools.
+  //   ;['receipt-elements-panel', 'receipt-settings-panel', 'receipt-properties-panel'].forEach((id) => {
+  //     const el = document.getElementById(id)
+  //     if (el) el.classList.remove('open')
+  //   })
+  // }
 
   zoomChanged(event) {
     this.setZoom(parseFloat(event.target.value))
