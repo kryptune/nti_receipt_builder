@@ -1,6 +1,6 @@
 <% content_for :title, "Edit #{@receipt_template.name}" %>
 <% content_for :cardless, true %>
-
+<div class="nrb-receipt-builder-container">
 <%= form_with model: @receipt_template, url: url_for(action: :update, id: @receipt_template.id), method: :patch,
     scope: :receipt_template,
     data: {
@@ -21,30 +21,38 @@
     } do |f| %>
 
   <div class="nrb-receipt-topbar">
-    <div>
-      <span class="nrb-receipt-topbar-name"><%= @receipt_template.name %></span>
-      <span class="text-secondary"><%= @receipt_template.paper_width_mm %>mm × <%= @receipt_template.paper_height_mm %>mm</span>
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn btn-outline-secondary" aria-label="Toggle elements"
+            data-action="click->nrb-builder#toggleElements">
+          <span class="material-symbols-outlined" aria-hidden="true">widgets</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary" aria-label="Toggle settings"
+            data-action="click->nrb-builder#toggleSettings">
+          <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+        </button>
+      </div>
+      <%= link_to url_for(action: :index), class: 'nrb-receipt-topbar-back' do %>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        Templates
+      <% end %>
+      <div class="nrb-receipt-topbar-divider"></div>
+      <div class="d-flex flex-column justify-content-center">
+        <div class="nrb-receipt-topbar-name"><%= @receipt_template.name %></div>
+        <div class="nrb-receipt-topbar-dimensions"><%= @receipt_template.paper_width_mm %>mm × <%= @receipt_template.paper_height_mm %>mm</div>
+      </div>
     </div>
     <div class="d-flex justify-content-end gap-2">
-      <button type="button" class="btn btn-outline-secondary" aria-label="Toggle elements"
-          data-action="click->nrb-builder#toggleElements">
-        <span class="material-symbols-outlined" aria-hidden="true">widgets</span>
-      </button>
-      <button type="button" class="btn btn-outline-secondary" aria-label="Toggle settings"
-          data-action="click->nrb-builder#toggleSettings">
-        <span class="material-symbols-outlined" aria-hidden="true">tune</span>
-      </button>
       <button type="button" class="btn btn-outline-secondary" aria-label="Toggle properties"
           data-action="click->nrb-builder#toggleProperties">
         <span class="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
       </button>
       <%= f.button 'Draft Preview', type: 'submit', class: 'btn btn-outline-secondary',
           formaction: url_for(action: :render_preview, id: @receipt_template.id), formmethod: :post %>
-      <%= f.button 'Saved Preview', type: 'submit', class: 'btn btn-outline-secondary',
-          formaction: url_for(action: :preview, id: @receipt_template.id), formmethod: :post do%>
-            <span class="material-symbols-outlined pe-1">visibility</span>Saved Preview
+      <%= link_to url_for(action: :preview, id: @receipt_template.id),
+          class: 'btn btn-outline-secondary', data: { turbo_stream: true, turbo_method: :get } do %>
+        <span class="material-symbols-outlined pe-1">visibility</span>Saved Preview
       <% end %>
-      <%= link_to 'Back to Templates', url_for(action: :index), class: 'btn btn-secondary' %>
       <%= f.submit 'Save', class: 'btn btn-primary' %>
     </div>
   </div>
@@ -59,3 +67,4 @@
     <%= render 'nti_receipt_builder/templates/canvas', f: f %>
   </div>
 <% end %>
+</div>

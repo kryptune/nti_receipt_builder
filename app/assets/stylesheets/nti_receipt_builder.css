@@ -17,12 +17,34 @@
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(31, 41, 55, 0.3);
 }
 .nrb-receipt-topbar-name {
-  font-size: 1.3rem; font-weight: 800;
+  font-size: 1rem; font-weight: 800;
   letter-spacing: -0.01em; color: var(--tblr-dark);
   margin-right: 0.75rem;
+}
+
+.nrb-receipt-topbar-dimensions{
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--tblr-secondary);
+}
+
+.nrb-receipt-topbar-back {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); font-size: 14px; font-weight: 400;
+  background: none; border: none; cursor: pointer; padding: 6px 8px; border-radius: 7px;
+  white-space: nowrap;
+}
+
+.nrb-receipt-topbar-divider { width: 2px; height: 26px; background: #D7D7DE; flex: 0 0 auto; }
+
+/* Keep the control for an open overlay visually selected. */
+.nrb-panel-toggle.is-open {
+  background-color: rgba(var(--tblr-primary-rgb, 32, 107, 196), 0.14);
+  border-color: var(--tblr-primary, #206bc4);
+  color: var(--tblr-primary, #206bc4);
 }
 
 /* ---- 3-column editor layout: settings+elements / canvas / properties ---- */
@@ -39,32 +61,36 @@
   .nrb-receipt-builder-side { display: none; }
 }
 
+.nrb-receipt-builder-container {
+  border-radius: var(--tblr-card-border-radius, 1.25rem);
+  background: #fff;
+  border: 1px solid rgba(31, 41, 55, 0.3);
+}
+
 /* Overlay panels: hidden by default, shown as absolute overlays when the `.open` class
    is added (toggled by the builder controller). These sit above the canvas, like Figma's
    side panels, and do not affect canvas width while hidden. */
 .nrb-receipt-panel.overlay {
-  position: absolute;
-  top: 3.5rem;
-  bottom: 2rem;
+  position: fixed;
+  top: 61px;
+  bottom: 64px;
+  z-index: 9999;
   width: 20rem;
   max-width: 90%;
-  z-index: 60;
   display: none;
   transition: transform 0.18s ease, opacity 0.18s ease;
 }
-.nrb-receipt-panel.overlay.open { display: block; opacity: 1; transform: none; margin: 0.5rem; }
+.nrb-receipt-panel.overlay.open { display: block; opacity: 1; transform: none; }
 
 /* Left-side overlays (elements & settings) */
 #receipt-elements-panel.nrb-receipt-panel.overlay,
 #receipt-settings-panel.nrb-receipt-panel.overlay {
-  left: 1rem;
-  transform: translate(20px, 20px);
+  left: 21px;
 }
 
 /* Right-side overlay (properties) */
 #receipt-properties-panel.nrb-receipt-panel.overlay {
-  right: 1rem;
-  transform: translate(-20px, 20px);
+  right: 21px;
 }
 
 /* Slightly narrower canvas padding when overlays are in use (visual tweak). */
@@ -73,16 +99,14 @@
 /* ---- Shared glass-panel chrome for the editor's 4 panels ---- */
 .nrb-receipt-panel {
   position: relative;
-  border-radius: var(--tblr-card-border-radius, 1.25rem);
   padding: 1.25rem;
   background: #fff;
-  border: 1px solid rgba(31, 41, 55, 0.06);
-  box-shadow: 0 1.25rem 2.5rem -1.5rem rgba(31, 41, 55, 0.25);
   height: auto;
+  min-height: 90vh;
 }
-.nrb-receipt-panel--elements {height: fit-content; max-height: 90vh; overflow-y: auto;}
-.nrb-receipt-panel--properties {height: fit-content; max-height: 90vh; overflow-y: auto;}
-.nrb-receipt-panel--settings {height: fit-content; max-height: 90vh; overflow-y: auto;}
+.nrb-receipt-panel--elements {overflow-y: auto;}
+.nrb-receipt-panel--properties {overflow-y: auto;}
+.nrb-receipt-panel--settings {overflow-y: auto;}
 .nrb-receipt-panel .card-title { margin-bottom: 0.85rem; }
 .nrb-receipt-panel--canvas { display: flex; flex-direction: column; gap: 1rem; height: auto; }
 .nrb-receipt-hint { font-size: 0.82rem; margin: 0.5rem 0 0; }
@@ -136,13 +160,13 @@
         `.nrb-receipt-paper-render` (preview/print) is a separate class —
         the builder's `.nrb-receipt-paper` never appears in rendered output. ---- */
 .nrb-receipt-viewport {
+  display: block;
   flex: 1 1 auto;
-  min-height: 28rem;
+  min-height: 93vh;
   overflow: auto;
   padding: 2rem;
   background: rgba(31, 41, 55, 0.03);
   border: 1px solid rgba(31, 41, 55, 0.06);
-  border-radius: 1rem;
 }
 .nrb-receipt-paper {
   position: relative;
