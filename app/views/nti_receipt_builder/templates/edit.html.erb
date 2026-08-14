@@ -23,12 +23,14 @@
   <div class="nrb-receipt-topbar">
     <div class="d-flex align-items-center gap-3">
       <div class="d-flex align-items-center gap-2">
-        <button type="button" class="btn btn-outline-secondary" aria-label="Toggle elements"
-            data-action="click->nrb-builder#toggleElements">
+        <button type="button" class="btn btn-outline-secondary nrb-panel-toggle" aria-label="Toggle elements"
+            aria-controls="receipt-elements-panel" aria-expanded="false"
+            data-panel-id="receipt-elements-panel" data-action="click->nrb-builder#toggleElements">
           <span class="material-symbols-outlined" aria-hidden="true">widgets</span>
         </button>
-        <button type="button" class="btn btn-outline-secondary" aria-label="Toggle settings"
-            data-action="click->nrb-builder#toggleSettings">
+        <button type="button" class="btn btn-outline-secondary nrb-panel-toggle" aria-label="Toggle settings"
+            aria-controls="receipt-settings-panel" aria-expanded="false"
+            data-panel-id="receipt-settings-panel" data-action="click->nrb-builder#toggleSettings">
           <span class="material-symbols-outlined" aria-hidden="true">tune</span>
         </button>
       </div>
@@ -43,8 +45,9 @@
       </div>
     </div>
     <div class="d-flex justify-content-end gap-2">
-      <button type="button" class="btn btn-outline-secondary" aria-label="Toggle properties"
-          data-action="click->nrb-builder#toggleProperties">
+      <button type="button" class="btn btn-outline-secondary nrb-panel-toggle" aria-label="Toggle properties"
+          aria-controls="receipt-properties-panel" aria-expanded="false"
+          data-panel-id="receipt-properties-panel" data-action="click->nrb-builder#toggleProperties">
         <span class="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
       </button>
       <%= f.button 'Draft Preview', type: 'submit', class: 'btn btn-outline-secondary',

@@ -303,3 +303,10 @@
 .material-symbols-outlined{
   font-size: 18px;
 }
+
+/* Keep the control for an open overlay visually selected. */
+.nrb-panel-toggle.is-open {
+  background-color: rgba(var(--tblr-primary-rgb, 32, 107, 196), 0.14);
+  border-color: var(--tblr-primary, #206bc4);
+  color: var(--tblr-primary, #206bc4);
+}

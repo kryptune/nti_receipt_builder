@@ -33,6 +33,11 @@ export default class extends Controller {
     this.paletteDragHandler = null
   }
 
+  connect() {
+    this.syncPanelToggleButtons()
+  }
+
+
   // Stimulus calls this on connect and after every assignment to layoutValue — adding, patching,
   // moving, resizing and deleting all route through one of those, so the hidden field is never
   // stale.
@@ -316,19 +321,33 @@ export default class extends Controller {
     const el = document.getElementById(id)
     if (!el) return
     el.classList.toggle('open')
+    this.syncPanelToggleButtons()
+  }
+
+  syncPanelToggleButtons() {
+    this.element.querySelectorAll('[data-panel-id]').forEach((button) => {
+      const panel = document.getElementById(button.dataset.panelId)
+      const isOpen = panel?.classList.contains('open') || false
+
+      button.classList.toggle('is-open', isOpen)
+      button.setAttribute('aria-expanded', isOpen)
+    })
   }
 
   toggleElements() {
     this.togglePanelById('receipt-elements-panel')
     document.getElementById('receipt-settings-panel')?.classList.remove('open')
+    this.syncPanelToggleButtons()
   }
 
   toggleSettings() {
     this.togglePanelById('receipt-settings-panel')
     document.getElementById('receipt-elements-panel')?.classList.remove('open')
+    this.syncPanelToggleButtons()
   }
 
   toggleProperties() {
     this.togglePanelById('receipt-properties-panel')
+    this.syncPanelToggleButtons()
   }
 }
